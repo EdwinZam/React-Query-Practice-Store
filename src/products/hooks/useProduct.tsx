@@ -1,0 +1,24 @@
+
+import { useQuery } from '@tanstack/react-query';
+import { productActions } from '..';
+
+interface Options {
+    id: number;
+}
+
+export const useProduct = ({ id }: Options) => {
+
+    const { data:product , error, isLoading, isError, isFetching } = 
+    useQuery({
+        queryKey: ['product', id],
+        queryFn: () => productActions.getProductById(id),
+        staleTime: 1000 * 60 * 60,
+    });
+    return{
+        product,
+        error,
+        isLoading,
+        isError,
+        isFetching
+    }
+}
